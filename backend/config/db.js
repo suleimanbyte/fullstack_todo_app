@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
 
-function connectDB() {
-    mongoose.connect(process.env.example.MONGO_URI)
-    .then(() => {
-        console.log("MongoDB Connected ✅");
-    });
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ MongoDB connected using Mongoose");
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error.message);
+    process.exit(1);
+  }
 }
 
 const UserSchema = new mongoose.Schema({
@@ -18,11 +21,16 @@ const UserSchema = new mongoose.Schema({
 })
 
 const TodoSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-})
+  title: String,
+  description: String,
+  completed: Boolean
+},
+{
+  timestamps: true
+}
+);
 
-const User = mongoose.model("User", UserSchema)
+const User = mongoose.model("User", UserSchema);
 const Todo = mongoose.model("Todo", TodoSchema)
 
 
