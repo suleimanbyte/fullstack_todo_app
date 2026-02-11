@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo APP</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        #btn {
+            margin: 15px 0;
+            background-color: #552727;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Todo APP</h1>
+        <!-- <form action="http://localhost:3000/todos" method="post">
+            <input type="text" placeholder="Enter a title"> <br> <br>
+            <input type="text" placeholder="Enter a description"> <br> <br>
+            
+            <button>Add Todo</button>
+        </form> -->
+        <div id="todos"></div>
+        <button id="btn" onclick="todos()">Get All Todos</button>
+    </div>
+
+    <script>
+        async function getTodos() {
+            const response = await fetch("http://localhost:3000/todos")
+            const todos = await response.json()
+            // console.log(todos)
+            return todos;
+        }
+        async function todos() {
+            const todosDiv = document.getElementById("todos")
+            todosDiv.innerHTML = ""
+            const todos = await getTodos();
+            console.log(todos)
+            console.log(todos.length)
+            for (let i = 0; i < todos.length; i++) {
+                console.log(todos[i])
+                const title = document.createElement("h2")
+                title.textContent = todos[i].title
+                const desc = document.createElement("p")
+                desc.textContent = todos[i].description
+                const done = document.createElement("button")
+                done.textContent = todos[i].completed ? "Done" : "Not Done"
+                todosDiv.appendChild(title)
+                todosDiv.appendChild(desc)
+                todosDiv.appendChild(done)
+            }
+        }
+    </script>
+</body>
+
+</html>
