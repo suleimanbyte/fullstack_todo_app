@@ -9,6 +9,7 @@
         body {
             text-align: center;
         }
+
         #btn {
             margin: 15px 0;
             background-color: #552727;
@@ -23,21 +24,48 @@
 <body>
     <div>
         <h1>Todo APP</h1>
-        <!-- <form action="http://localhost:3000/todos" method="post">
-            <input type="text" placeholder="Enter a title"> <br> <br>
-            <input type="text" placeholder="Enter a description"> <br> <br>
-            
-            <button>Add Todo</button>
-        </form> -->
-        <div id="todos"></div>
+        <!-- <form action="http://localhost:3000/todos" method="post"> -->
+        <form>
+            <input type="text" placeholder="Enter a title" id="title"> <br> <br>
+            <input type="text" placeholder="Enter a description" id="description"> <br> <br>
+            <button id="done" onclick="Done()"></button>
+            <button onclick="summitTodo()">Add Todo</button>
+        </form>
+        <!-- <div id="todos">
+            <h1 class="title"></h1>
+            <h1 class="description"></h1>
+        </div> -->
         <button id="btn" onclick="todos()">Get All Todos</button>
+        <div id="todos"></div>
     </div>
 
     <script>
+        function Done() {
+            const done = document.getElementById("done")
+            done ? done.textContent = "Mark as done" : done.textContent = "Mark as done"
+        }
+        async function summitTodo(e) {
+            e.preventDefualt()
+            const title = document.getElementById("title").value
+            const description = document.getElementById("description").value
+            const response = await fetch("http://localhost:5000/todos",
+                {
+                    method: "POST",
+                    body: {
+                        title: title,
+                        description: description
+                    }
+                })
+            const todos = await response.json()
+        }
         async function getTodos() {
-            const response = await fetch("http://localhost:3000/todos")
+            const response = await fetch("http://localhost:5000/todos")
             const todos = await response.json()
             // console.log(todos)
+            // for (let i = 0; i < todos.length; i++) {
+            //     document.getElementsByClassName("title").textContent = todos[i].title
+            //     document.getElementsByClassName("description").textContent = todos[i].description
+            // }
             return todos;
         }
         async function todos() {
@@ -58,6 +86,7 @@
                 todosDiv.appendChild(desc)
                 todosDiv.appendChild(done)
             }
+            return todosDiv
         }
     </script>
 </body>

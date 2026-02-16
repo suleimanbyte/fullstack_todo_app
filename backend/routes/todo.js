@@ -25,7 +25,8 @@ router.post("/", async (req, res) => {
   }
 
   // const newId = todos.length > 0 ? Math.max(...todos.map((t) => parseInt(t.id))) + 1 : 1;
-  const newId = todos.length + 1;
+  // const newId = todos.length + 1;
+  const newId = Math.floor(Math.random() * 1000000);
 
   const newTodo = {
     id: newId,
