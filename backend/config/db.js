@@ -14,16 +14,16 @@ async function connectDB() {
 const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
-    userTodo: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Todo"
-    }]
 })
 
 const TodoSchema = new mongoose.Schema({
   title: String,
   description: String,
-  completed: Boolean
+  completed: Boolean,
+  user: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }]
 },
 {
   timestamps: true
