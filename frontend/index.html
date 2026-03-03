@@ -5,11 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo APP</title>
+    <script src="script.js" defer></script>
     <style>
         body {
-            text-align: center;
-        }
+    margin: 0;
+    padding: 0;
+    background-color: beige;
+    min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+#container {
+    background-color: lightblue;
+    background: transparent;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+}
         #btn {
             margin: 15px 0;
             background-color: #552727;
@@ -22,73 +36,44 @@
 </head>
 
 <body>
-    <div>
+    <div id="container">
         <h1>Todo APP</h1>
-        <!-- <form action="http://localhost:3000/todos" method="post"> -->
-        <form>
+        <form id="todoForm">
             <input type="text" placeholder="Enter a title" id="title"> <br> <br>
             <input type="text" placeholder="Enter a description" id="description"> <br> <br>
-            <button id="done" onclick="Done()"></button>
-            <button onclick="summitTodo()">Add Todo</button>
+            <button type="submit">Add Todo</button>
         </form>
-        <!-- <div id="todos">
-            <h1 class="title"></h1>
-            <h1 class="description"></h1>
-        </div> -->
-        <button id="btn" onclick="todos()">Get All Todos</button>
+        <!-- <button id="btn" onload="todos()">Get All Todos</button> -->
         <div id="todos"></div>
     </div>
 
-    <script>
-        function Done() {
-            const done = document.getElementById("done")
-            done ? done.textContent = "Mark as done" : done.textContent = "Mark as done"
-        }
-        async function summitTodo(e) {
-            e.preventDefualt()
-            const title = document.getElementById("title").value
-            const description = document.getElementById("description").value
-            const response = await fetch("http://localhost:5000/todos",
-                {
-                    method: "POST",
-                    body: {
-                        title: title,
-                        description: description
-                    }
-                })
-            const todos = await response.json()
-        }
-        async function getTodos() {
-            const response = await fetch("http://localhost:5000/todos")
-            const todos = await response.json()
-            // console.log(todos)
-            // for (let i = 0; i < todos.length; i++) {
-            //     document.getElementsByClassName("title").textContent = todos[i].title
-            //     document.getElementsByClassName("description").textContent = todos[i].description
-            // }
-            return todos;
-        }
-        async function todos() {
-            const todosDiv = document.getElementById("todos")
-            todosDiv.innerHTML = ""
-            const todos = await getTodos();
-            console.log(todos)
-            console.log(todos.length)
-            for (let i = 0; i < todos.length; i++) {
-                console.log(todos[i])
-                const title = document.createElement("h2")
-                title.textContent = todos[i].title
-                const desc = document.createElement("p")
-                desc.textContent = todos[i].description
-                const done = document.createElement("button")
-                done.textContent = todos[i].completed ? "Done" : "Not Done"
-                todosDiv.appendChild(title)
-                todosDiv.appendChild(desc)
-                todosDiv.appendChild(done)
-            }
-            return todosDiv
-        }
-    </script>
+
+ 
+
+
+        <!-- // this function doing DOM manupilation
+        // async function todos() {
+        //     const todosDiv = document.getElementById("todos")
+        //     todosDiv.innerHTML = ""
+        //     const todos = await getTodos();
+        //     console.log(todos)
+        //     console.log(todos.length)
+        //     for (let i = 0; i < todos.length; i++) {
+        //         console.log(todos[i])
+        //         const title = document.createElement("h2")
+        //         title.textContent = todos[i].title
+        //         const desc = document.createElement("p")
+        //         desc.textContent = todos[i].description
+        //         const done = document.createElement("button")
+        //         done.textContent = todos[i].completed ? "Done" : "Not Done"
+        //         todosDiv.appendChild(title)
+        //         todosDiv.appendChild(desc)
+        //         todosDiv.appendChild(done)
+        //     }
+        //     return todosDiv
+        // } -->
+
+
 </body>
 
 </html>

@@ -4,6 +4,7 @@ const path = require("path");
 const router = Router();
 
 const filePath = path.resolve("data/todos.json");
+console.log(filePath)
 
 async function getAllTodo() {
   const todos = await fs.readFile(filePath, "utf8");
@@ -58,7 +59,6 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
   const todos = await getAllTodo();
-  // const todoIndex = todos.findIndex(todos, parseInt(id));
   const todoIndex = todos.findIndex(t => t.id === parseInt(id));
   if (todoIndex === -1) {
     res.status(404).send("Todo not found");
@@ -81,9 +81,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   const todos = await getAllTodo();
-  // const todoIndex = todos.findIndex(todos, parseInt(id));
   const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
-  console.log(todoIndex)
   if (todoIndex === -1) {
     res.status(404).send("Todo not found");
   }
